@@ -18,7 +18,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.udj.bizcard.ui.theme.BizCardTheme
@@ -60,6 +59,14 @@ fun createBiCard() {
                 createImageProfile()
                 Divider(color = Color.LightGray, thickness = 2.dp)
                 createText(text = "Person A.")
+
+                Button(onClick = { /*TODO*/ }) {
+                    Text(
+                        text = "Portifolio",
+                        style = MaterialTheme.typography.button,
+                        modifier = Modifier.padding(4.dp)
+                    )
+                }
             }
         }
 
@@ -69,28 +76,31 @@ fun createBiCard() {
 
 @Composable
 private fun createText(text: String) {
-    Column(modifier = Modifier.padding(8.dp),
+    Column(
+        modifier = Modifier.padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+    ) {
         Text(
             text = text,
             color = MaterialTheme.colors.primaryVariant,
             style = MaterialTheme.typography.h4
         )
-        
-        Text(text = "Android Developer",
+
+        Text(
+            text = "Android Developer",
             modifier = Modifier.padding(4.dp),
             style = MaterialTheme.typography.subtitle2,
             fontSize = 24.sp
-            )
+        )
 
-        Text(text = "email@gmail.com",
+        Text(
+            text = "email@gmail.com",
             modifier = Modifier.padding(4.dp),
             style = MaterialTheme.typography.subtitle1,
             fontSize = 18.sp
-            )
+        )
     }
-    
+
 }
 
 @Composable
