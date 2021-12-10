@@ -9,10 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,7 +18,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.udj.bizcard.ui.theme.BizCardTheme
 
 class MainActivity : ComponentActivity() {
@@ -40,9 +39,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun createBiCard() {
-    Surface(modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight()
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
     ) {
         Card(
             modifier = Modifier
@@ -53,14 +53,44 @@ fun createBiCard() {
             shape = RoundedCornerShape(corner = CornerSize(16.dp)),
             backgroundColor = Color.White
         ) {
-            Column(modifier = Modifier.height(300.dp), verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
+            Column(
+                modifier = Modifier.height(300.dp), verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 createImageProfile()
-                Divider()
+                Divider(color = Color.LightGray, thickness = 2.dp)
+                createText(text = "Person A.")
             }
         }
+
+
     }
+}
+
+@Composable
+private fun createText(text: String) {
+    Column(modifier = Modifier.padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+        Text(
+            text = text,
+            color = MaterialTheme.colors.primaryVariant,
+            style = MaterialTheme.typography.h4
+        )
+        
+        Text(text = "Android Developer",
+            modifier = Modifier.padding(4.dp),
+            style = MaterialTheme.typography.subtitle2,
+            fontSize = 24.sp
+            )
+
+        Text(text = "email@gmail.com",
+            modifier = Modifier.padding(4.dp),
+            style = MaterialTheme.typography.subtitle1,
+            fontSize = 18.sp
+            )
+    }
+    
 }
 
 @Composable
