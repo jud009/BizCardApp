@@ -6,11 +6,15 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,6 +42,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun createBiCard() {
+
+    val buttonClickState = remember {
+        mutableStateOf(false)
+    }
+
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -60,19 +69,60 @@ fun createBiCard() {
                 Divider(color = Color.LightGray, thickness = 2.dp)
                 createText(text = "Person A.")
 
-                Button(onClick = { /*TODO*/ }) {
+                Button(onClick = {
+                    buttonClickState.value = !buttonClickState.value
+                }) {
                     Text(
-                        text = "Portifolio",
+                        text = "Portfolio",
                         style = MaterialTheme.typography.button,
                         modifier = Modifier.padding(4.dp)
                     )
                 }
+
+                if(buttonClickState.value){
+                    content()
+                }else{ Box() {}}
             }
         }
 
 
     }
 }
+
+@Preview
+@Composable
+private fun content() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .padding(8.dp)
+    ) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(4.dp),
+            shape = RoundedCornerShape(corner = CornerSize(8.dp)),
+            border = BorderStroke(width = 2.dp, color = Color.LightGray)
+        ) {
+            portfolio(values = listOf(
+                "Project1", "Project2",
+                "Project3", "Project4",
+                "Project3", "Project4"))
+        }
+    }
+}
+
+@Composable
+private fun portfolio(values: List<String>){
+    LazyColumn {
+        items(values){ item ->
+            Text(text = item)
+        }
+    }
+}
+
 
 @Composable
 private fun createText(text: String) {
@@ -124,7 +174,7 @@ private fun createImageProfile() {
 }
 
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     BizCardTheme {
