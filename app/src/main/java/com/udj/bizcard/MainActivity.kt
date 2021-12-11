@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,9 +19,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -79,9 +82,11 @@ fun createBiCard() {
                     )
                 }
 
-                if(buttonClickState.value){
+                if (buttonClickState.value) {
                     content()
-                }else{ Box() {}}
+                } else {
+                    Box() {}
+                }
             }
         }
 
@@ -106,19 +111,38 @@ private fun content() {
             shape = RoundedCornerShape(corner = CornerSize(8.dp)),
             border = BorderStroke(width = 2.dp, color = Color.LightGray)
         ) {
-            portfolio(values = listOf(
-                "Project1", "Project2",
-                "Project3", "Project4",
-                "Project3", "Project4"))
+            portfolio(
+                values = listOf(
+                    "Project1", "Project2",
+                    "Project3", "Project4",
+                    "Project3", "Project4"
+                )
+            )
         }
     }
 }
 
 @Composable
-private fun portfolio(values: List<String>){
+private fun portfolio(values: List<String>) {
     LazyColumn {
-        items(values){ item ->
-            Text(text = item)
+        items(values) { item ->
+            Card(modifier = Modifier
+                .padding(13.dp)
+                .fillMaxWidth(), shape = RectangleShape, elevation = 4.dp) {
+                Row(modifier = Modifier
+                    .padding(8.dp)
+                    .background(MaterialTheme.colors.surface)
+                    .padding(16.dp)) {
+                    createImageProfile(modifier = Modifier.size(64.dp))
+                    Column(modifier = Modifier
+                        .padding(7.dp)
+                        .align(alignment = Alignment.CenterVertically)) {
+                        Text(text = item, fontWeight = FontWeight.Bold)
+                        Text(text = "Building a project", style = MaterialTheme.typography.body2)
+                    }
+
+                }
+            }
         }
     }
 }
@@ -154,9 +178,9 @@ private fun createText(text: String) {
 }
 
 @Composable
-private fun createImageProfile() {
+private fun createImageProfile(modifier: Modifier = Modifier) {
     Surface(
-        modifier = Modifier
+        modifier = modifier
             .size(128.dp)
             .padding(8.dp),
         shape = CircleShape,
@@ -167,7 +191,7 @@ private fun createImageProfile() {
         Image(
             painter = painterResource(id = R.drawable.user_profile),
             contentDescription = stringResource(R.string.user_profile_image),
-            modifier = Modifier.size(128.dp),
+            modifier = modifier.size(128.dp),
             contentScale = ContentScale.Crop
         )
     }
